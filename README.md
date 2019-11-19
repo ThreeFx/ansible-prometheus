@@ -6,7 +6,9 @@ Ansible role to set up prometheus for monitoring.
 Requirements
 ------------
 
-None.
+A TLS client certificate (certificate and key concatenated) placed in
+`/etc/haproxy/prometheus-server.pem`, and the corresponding CA certificate
+placed in `/etc/haproxy/prometheus-ca.pem`.
 
 Role Variables
 --------------
