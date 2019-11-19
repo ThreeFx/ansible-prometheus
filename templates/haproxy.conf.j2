@@ -5,7 +5,7 @@
 frontend node-{{ host }}-frontend
     bind 127.0.0.2:{{ 19000 + loop.index }}
     mode http
-    default-backend node-{{ host }}-backend
+    default_backend node-{{ host }}-backend
 
 backend node-{{ host }}-backend
     mode http
