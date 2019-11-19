@@ -1,5 +1,9 @@
 # {{ ansible_managed }}
 
+resolvers dns
+    parse-resolv-conf
+    hold valid 10s
+
 {% for host in prometheus_scan_hosts %}
 {% if 'node' in hostvars[host].prometheus_exporters|default([]) %}
 frontend node-{{ host }}-frontend
