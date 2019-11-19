@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+
+{% for host in prometheus_scan_hosts %}
+{% if 'node' in hostvars[host].prometheus_exporters|default([]) %}
+frontend node-{{ host }}-frontend
+    bind 127.0.0.2:{{ 19000 + loop.index }}
+    mode http
+    default-backend node-{{ host }}-backend
+
+backend node-{{ host }}-backend
+    mode http
+    server remote {{ host }}:{{ prometheus_ports.node }} ssl crt /etc/haproxy/prometheus-server.crt ca-file /etc/haproxy/prometheus-ca.crt verify required init-addr none
+
+{% endif %}
+{% endfor %}

@@ -1,0 +1,19 @@
+---
+- name: Install prometheus
+  become: True
+  apt:
+    name: prometheus
+    state: present
+
+- name: Configure prometheus
+  become: True
+  template:
+    src: prometheus.yml.j2
+    dest: /etc/prometheus/prometheus.yml
+  notify: restart prometheus
+
+- name: Configure haproxy
+  become: True
+  template:
+    src: haproxy.conf.j2
+    dest: /etc/haproxy/conf.d/50-prometheus.yml

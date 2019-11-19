@@ -1,0 +1,7 @@
+---
+- name: restart prometheus
+  become: True
+  systemd:
+    name: prometheus
+    state: restarted
+    enabled: yes
