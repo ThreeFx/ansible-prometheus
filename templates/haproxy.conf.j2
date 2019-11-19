@@ -13,7 +13,7 @@ frontend node-{{ host }}-frontend
 
 backend node-{{ host }}-backend
     mode http
-    server remote {{ host }}:9101 ssl crt /etc/haproxy/prometheus-server.pem ca-file /etc/haproxy/prometheus-ca.pem verify required init-addr none
+    server-template remote 3 {{ host }}:9101 ssl crt /etc/haproxy/prometheus-server.pem ca-file /etc/haproxy/prometheus-ca.pem verify required init-addr none
 
 {% endif %}
 {% endfor %}
