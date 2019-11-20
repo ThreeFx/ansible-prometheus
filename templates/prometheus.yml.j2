@@ -7,9 +7,10 @@ global:
 scrape_configs:
   - job_name: 'node'
     static_configs:
-      - targets:
 {% for host in prometheus_scan_hosts %}
 {% if 'node' in prometheus_exporters|default([]) %}
-          - 127.0.0.2:{{ 19000 + loop.index }}
+      - targets: 127.0.0.2:{{ 19000 + loop.index }}
+        labels:
+          instance: {{ host }}
 {% endif %}
 {% endfor %}
