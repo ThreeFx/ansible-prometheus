@@ -13,7 +13,7 @@ frontend node-{{ host }}-frontend
 
 backend node-{{ host }}-backend
     mode http
-    option httpchk get /metrics
+    option httpchk get /
     http-check expect status 200
     server-template remote 3 {{ host }}:9101 ssl crt /etc/haproxy/prometheus-server.pem ca-file /etc/haproxy/prometheus-ca.pem verify required check resolvers dns init-addr none
 
