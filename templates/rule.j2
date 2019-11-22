@@ -2,4 +2,4 @@
 # {{ ansible_managed }}
 
 groups:
-  - {{ item | to_nice_yaml | indent(4) }}
+  - {{ item | to_nice_yaml(indent=2) | indent(4) }}
