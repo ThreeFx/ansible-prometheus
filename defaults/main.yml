@@ -1,6 +1,8 @@
 ---
 prometheus_scrape_interval: "15s"
-
 prometheus_scan_hosts: []
+
+prometheus_recording_rules: []
+prometheus_alerting_rules: []
 
 prometheus_alertmanagers: []

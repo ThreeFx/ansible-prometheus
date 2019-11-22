@@ -5,6 +5,15 @@
     name: prometheus
     state: present
 
+- name: Ensure rules directories are present
+  become: True
+  file:
+    path: "/etc/prometheus/{{ item }}"
+    state: directory
+  with_items:
+    - recording-rules
+    - alerting-rules
+
 - name: Configure defaults for prometheus
   become: True
   template:
@@ -18,6 +27,20 @@
     src: prometheus.yml.j2
     dest: /etc/prometheus/prometheus.yml
   notify: restart prometheus
+
+- name: Configure recording rules
+  become: True
+  template:
+    src: rule.j2
+    dest: "/etc/prometheus/recording-rules/{{ item.name }}.rule"
+  with_items: prometheus_recording_rules
+
+- name: Configure alerting rules
+  become: True
+  template:
+    src: rule.j2
+    dest: "/etc/prometheus/alerting-rules/{{ item.name }}.rule"
+  with_items: prometheus_alerting_rules
 
 - name: Configure haproxy
   become: True

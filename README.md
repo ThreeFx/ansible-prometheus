@@ -17,7 +17,9 @@ Role Variables
 --------------- |---------------|--------------
 `prometheus_scrape_interval` | "15s" | Time interval in which to scrape hosts
 `prometheus_scan_hosts` | [] | Hosts to scan
-`prometheus_alertmanagers` | [] | Alertmanagers to use, configuration is given according to the `<alertmanager_config>` section in the prometheus documentation.
+`prometheus_recording_rules` | [] | Recording rules, configuration in YAML according to the Prometheus documentation
+`prometheus_alerting_rules` | [] | Alerting rules, configuration in YAML according to the Prometheus documentation
+`prometheus_alertmanagers` | [] | Alertmanagers to use, configuration in YAML according to the `<alertmanager_config>` section in the Prometheus documentation
 
 Dependencies
 ------------
