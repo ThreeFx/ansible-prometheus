@@ -33,14 +33,14 @@
   template:
     src: rule.j2
     dest: "/etc/prometheus/recording-rules/{{ item.name }}.rule"
-  with_items: prometheus_recording_rules
+  with_items: "{{ prometheus_recording_rules }}"
 
 - name: Configure alerting rules
   become: True
   template:
     src: rule.j2
     dest: "/etc/prometheus/alerting-rules/{{ item.name }}.rule"
-  with_items: prometheus_alerting_rules
+  with_items: "{{ prometheus_alerting_rules }}"
 
 - name: Configure haproxy
   become: True
