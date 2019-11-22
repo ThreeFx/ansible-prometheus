@@ -5,6 +5,13 @@
     name: prometheus
     state: present
 
+- name: Configure defaults for prometheus
+  become: True
+  template:
+    src: default.j2
+    dest: /etc/default/prometheus
+  notify: restart prometheus
+
 - name: Configure prometheus
   become: True
   template:
