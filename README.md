@@ -17,13 +17,13 @@ Role Variables
 --------------- |---------------|--------------
 `prometheus_scrape_interval` | "15s" | Time interval in which to scrape hosts
 `prometheus_scan_hosts` | [] | Hosts to scan
+`prometheus_alertmanagers` | [] | Alertmanagers to use, configuration is given according to the `<alertmanager_config>` section in the prometheus documentation.
 
 Dependencies
 ------------
 
 * [SOSETH haproxy](https://github.com/SOSETH/haproxy) role, or a role providing an identical `conf.d` style configuration interface for haproxy.
 * (optional) [SOSETH local-ca](https://github.com/SOSETH/local-ca) role, or a role providing a similar interface for automatic CA cert generation.
-
 
 Example Playbook
 ----------------

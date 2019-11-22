@@ -14,3 +14,12 @@ scrape_configs:
           instance: {{ host }}
 {% endif %}
 {% endfor %}
+
+{% if (prometheus_alertmanagers | length) > 0 %}
+alerting:
+  alert_relabel_configs: []
+  alertmanagers:
+{% for alertmanager in prometheus_alertmanagers %}
+    {{ alertmanager | to_nice_yaml(indent=2) | indent(4) }}
+{% endfor %}
+{% endif %}
