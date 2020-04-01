@@ -46,7 +46,7 @@ scrape_configs:
     static_configs:
 {% for host in prometheus_scan_hosts %}
 {% if 'bird' in hostvars[host].prometheus_exporters|default([]) %}
-      - targets: ["{{ host }}:9324"]
+      - targets: ["{{ host }}:9325"]
         labels:
           instance: {{ host }}
 {% endif %}
