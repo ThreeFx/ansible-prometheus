@@ -23,6 +23,20 @@ scrape_configs:
           instance: {{ host }}
 {% endif %}
 {% endfor %}
+  - job_name: 'nginx'
+    scheme: 'https'
+    tls_config:
+      ca_file: /etc/prometheus/prometheus-ca.pem
+      cert_file: /etc/prometheus/prometheus-client.pem
+      key_file: /etc/prometheus/prometheus-client.key
+    static_configs:
+{% for host in prometheus_scan_hosts %}
+{% if 'nginx' in hostvars[host].prometheus_exporters|default([]) %}
+      - targets: ["{{ host }}:9114"]
+        labels:
+          instance: {{ host }}
+{% endif %}
+{% endfor %}
 
 {% if (prometheus_alertmanagers | length) > 0 %}
 alerting:
