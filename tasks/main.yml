@@ -34,6 +34,7 @@
     src: rule.j2
     dest: "/etc/prometheus/recording-rules/{{ item.name }}.rule"
   with_items: "{{ prometheus_recording_rules }}"
+  notify: restart prometheus
 
 - name: Configure alerting rules
   become: True
@@ -41,3 +42,4 @@
     src: rule.j2
     dest: "/etc/prometheus/alerting-rules/{{ item.name }}.rule"
   with_items: "{{ prometheus_alerting_rules }}"
+  notify: restart prometheus
