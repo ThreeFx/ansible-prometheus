@@ -65,6 +65,42 @@ scrape_configs:
           instance: {{ host }}
 {% endif %}
 {% endfor %}
+{# The blackbox exporter is a little bit special - in order to use
+   it you have to install the blackbox exporter on the target host
+   and configure the target websites on the monitoring host #}
+{% for host in prometheus_scan_hosts %}
+{% if 'blackbox' in hostvars[host].prometheus_exporters|default([]) %}
+{% if (hostvars[host].prometheus_blackbox_websites|default([]) | length) > 0 %}
+  - job_name: 'blackbox-{{ host }}'
+    metrics_path: /probe
+    scrape_interval: 2m # scrape less often since these are actual http requests
+    params:
+      module: [http_2xx]
+      target:
+    scheme: 'https'
+    tls_config:
+      ca_file: /etc/prometheus/prometheus-ca.pem
+      cert_file: /etc/prometheus/prometheus-client.pem
+      key_file: /etc/prometheus/prometheus-client.key
+    static_configs:
+      - targets:
+{% for website in prometheus_blackbox_websites %}
+          - "{{ website }}"
+{% endfor %}
+        labels:
+          instance: "{{ host }}"
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: target
+      - target_label: __address__
+        replacement: "{{ host }}:9116"
+      - target_label: job
+        replacement: 'blackbox'
+{% endif %}
+{% endif %}
+{% endfor %}
 
 {% if (prometheus_alertmanagers | length) > 0 %}
 alerting:
